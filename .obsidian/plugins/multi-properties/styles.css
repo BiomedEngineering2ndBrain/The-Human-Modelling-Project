@@ -1,0 +1,67 @@
+.modal-inputs-container {
+	height: 200px;
+	width: 100%;
+	overflow-y: scroll;
+	border-radius: 5px;
+	border-style: solid;
+}
+
+.modal-inputs-container input {
+	max-height: 25px;
+	overflow-x: auto;
+}
+
+.modal-input-container {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.modal-inputs-container select {
+	height: 21px;
+}
+
+.modal-inputs-container button {
+	padding: 5px;
+	height: 21px;
+	font-weight: bold;
+}
+
+/* Basic button styling */
+a {
+	display: inline-block;
+	padding: var(--size-4-1) var(--size-4-2);
+	text-decoration: none;
+	background-color: var(--interactive-normal);
+	box-shadow: var(--input-shadow);
+	color: var(--text-normal);
+	border-radius: 4px; /* Rounded corners */
+	cursor: pointer;
+	text-align: center;
+	font-weight: var(--input-font-weight);
+	font-size: var(--font-ui-small);
+}
+
+/* Hover and focus styles */
+a:hover,
+a:focus {
+	outline: grey solid 2px;
+}
+
+input[type="checkbox"] {
+	cursor: pointer;
+	position: relative;
+	top: 6px;
+}
+
+/* Disabled style */
+a:disabled {
+	background-color: #ccc; /* Disabled background color */
+	border-color: #ccc; /* Disabled border color */
+	color: #999; /* Disabled text color */
+	cursor: not-allowed;
+}
