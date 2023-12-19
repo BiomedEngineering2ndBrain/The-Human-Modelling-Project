@@ -1,0 +1,3 @@
+[submodule "archive/GIT-Transport-Model"]
+	path = archive/GIT-Transport-Model
+	url = git@github.com:BiomedEngineering2ndBrain/GIT-Transport-Model.git
