@@ -13,5 +13,4 @@ assignees: ''
 **Why does this need doing**
 -
 
-**Priority level**
-- high/medium/low
+<!--Please set the priority level using labels-->
