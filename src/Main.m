@@ -94,13 +94,95 @@ heart_glucose_vector = zeros(1,simulation_time/time_step);
 
 % Run simulation
 for i = 0:time_step:simulation_time-time_step
-    % calculate new gut
-    Gut = calc_gut(Gut, arterial_SpO2, arterial_glucose, arterial_insulin, gut_SpO2, gut_glucose, gut_flowrate);
-    % create output vectors at each time step
-    time_vector((i/time_step)+1) = Gut.time;
-    arterial_SpO2_vector((i/time_step)+1) = arterial_SpO2;
-    arterial_glucose_vector((i/time_step)+1) = arterial_glucose;
-    arterial_insulin_vector((i/time_step)+1) = arterial_insulin;
-    gut_SpO2_vector((i/time_step)+1) = Gut.gut_SpO2;
-    gut_glucose_vector((i/time_step)+1) = Gut.gut_glucose;
+    % calculate new objects
+    [Gut, VascularSystem] = gut_calc(Gut, VascularSystem);
+    [Pancreas, VascularSystem] = pancreas_calc(Pancreas, VascularSystem);
+    [Muscle, VascularSystem] = muscle_calc(Muscle, VascularSystem);
+    [Liver, VascularSystem] = liver_calc(Liver, VascularSystem);
+    [Kidney, VascularSystem] = kidney_calc(Kidney, VascularSystem);
+    [Lung, VascularSystem] = lung_calc(Lung, VascularSystem);
+    [Brain, VascularSystem] = brain_calc(Brain, VascularSystem);
+    [Heart, VascularSystem] = heart_calc(Heart, VascularSystem);
+
+    % store values
+    % subsystems
+    time_vector(i/time_step+1) = Gut.time;
+    gut_SpO2_vector(i/time_step+1) = Gut.gut_SpO2;
+    gut_glucose_vector(i/time_step+1) = Gut.gut_glucose;
+    pancreas_SpO2_vector(i/time_step+1) = Pancreas.pancreas_SpO2;
+    pancreas_glucose_vector(i/time_step+1) = Pancreas.pancreas_glucose;
+    muscle_SpO2_vector(i/time_step+1) = Muscle.muscle_SpO2;
+    muscle_glucose_vector(i/time_step+1) = Muscle.muscle_glucose;
+    liver_SpO2_vector(i/time_step+1) = Liver.liver_SpO2;
+    liver_glucose_vector(i/time_step+1) = Liver.liver_glucose;
+    kidney_SpO2_vector(i/time_step+1) = Kidney.kidney_SpO2;
+    kidney_glucose_vector(i/time_step+1) = Kidney.kidney_glucose;
+    lung_SpO2_vector(i/time_step+1) = Lung.lung_SpO2;
+    lung_glucose_vector(i/time_step+1) = Lung.lung_glucose;
+    brain_SpO2_vector(i/time_step+1) = Brain.brain_SpO2;
+    brain_glucose_vector(i/time_step+1) = Brain.brain_glucose;
+    heart_SpO2_vector(i/time_step+1) = Heart.heart_SpO2;
+    heart_glucose_vector(i/time_step+1) = Heart.heart_glucose;
+    % vascular system
+    arterial_SpO2_vector(i/time_step+1) = VascularSystem.arterial_SpO2;
+    arterial_glucose_vector(i/time_step+1) = VascularSystem.arterial_glucose;
+    arterial_insulin_vector(i/time_step+1) = VascularSystem.arterial_insulin;
+    venous_SpO2_vector(i/time_step+1) = VascularSystem.venous_SpO2;
+    venous_glucose_vector(i/time_step+1) = VascularSystem.venous_glucose;
+    venous_insulin_vector(i/time_step+1) = VascularSystem.venous_insulin;
 end
+
+% time vector conversion to 24h00 format
+time_vector = time_vector / 3600;
+% Plot results
+% arterial graph
+figure(1)
+hold on
+plot(time_vector,arterial_SpO2_vector,'r')
+plot(time_vector,arterial_glucose_vector,'g')
+plot(time_vector,arterial_insulin_vector,'b')
+hold off
+grid on
+title('Arterial blood')
+xlabel('Time (hrs)')
+legend('SpO2 (%)','Glucose (mmol/L)','Insulin (mU/L)')
+xlim([0, simulation_time/3600])
+xticks(0:1:simulation_time/3600)
+% SpO2 graph
+figure(2)
+hold on
+plot(time_vector,gut_SpO2_vector,'r')
+plot(time_vector,pancreas_SpO2_vector,'g')
+plot(time_vector,muscle_SpO2_vector,'b')
+plot(time_vector,liver_SpO2_vector,'c')
+plot(time_vector,kidney_SpO2_vector,'m')
+plot(time_vector,lung_SpO2_vector,'y')
+plot(time_vector,brain_SpO2_vector,'k')
+plot(time_vector,heart_SpO2_vector,'Color',[0.5 0.5 0.5])
+hold off
+grid on
+title('SpO2 of the subsystems')
+xlabel('Time (hrs)')
+ylabel('SpO2 (%)')
+legend('Gut','Pancreas','Muscle','Liver','Kidney','Lung','Brain','Heart')
+xlim([0, simulation_time/3600])
+xticks(0:1:simulation_time/3600)
+% glucose graph
+figure(3)
+hold on
+plot(time_vector,gut_glucose_vector,'r')
+plot(time_vector,pancreas_glucose_vector,'g')
+plot(time_vector,muscle_glucose_vector,'b')
+plot(time_vector,liver_glucose_vector,'c')
+plot(time_vector,kidney_glucose_vector,'m')
+plot(time_vector,lung_glucose_vector,'y')
+plot(time_vector,brain_glucose_vector,'k')
+plot(time_vector,heart_glucose_vector,'Color',[0.5 0.5 0.5])
+hold off
+grid on
+title('Glucose of the subsystems')
+xlabel('Time (hrs)')
+ylabel('Glucose (mmol/L)')
+legend('Gut','Pancreas','Muscle','Liver','Kidney','Lung','Brain','Heart')
+xlim([0, simulation_time/3600])
+xticks(0:1:simulation_time/3600)
